@@ -13,6 +13,7 @@ class QRScannerController: UIViewController {
 
     @IBOutlet var messageLabel:UILabel!
     @IBOutlet var topbar: UIView!
+    @IBOutlet var laser: UIView!
     
     var captureSession = AVCaptureSession()
     
@@ -31,7 +32,8 @@ class QRScannerController: UIViewController {
                                       AVMetadataObject.ObjectType.itf14,
                                       AVMetadataObject.ObjectType.dataMatrix,
                                       AVMetadataObject.ObjectType.interleaved2of5,
-                                      AVMetadataObject.ObjectType.qr]
+                                      AVMetadataObject.ObjectType.qr,
+                                      AVMetadataObject.ObjectType.aztec]
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +60,6 @@ class QRScannerController: UIViewController {
             // Set delegate and use the default dispatch queue to execute the call back
             captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             captureMetadataOutput.metadataObjectTypes = supportedCodeTypes
-//            captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
             
         } catch {
             // If any error occurs, simply print it out and don't continue any more.
@@ -78,6 +79,7 @@ class QRScannerController: UIViewController {
         // Move the message label and top bar to the front
         view.bringSubviewToFront(messageLabel)
         view.bringSubviewToFront(topbar)
+        view.bringSubviewToFront(laser)
         
         // Initialize QR Code Frame to highlight the QR code
         qrCodeFrameView = UIView()
